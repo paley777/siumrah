@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $active }} | SiUmrah Ver 1.0</title>
-    <link rel="icon" href="{{ url('/assets/logo.png') }}" />
+    <link rel="icon" href="{{ url('/assets/logo.jpg') }}" />
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" href="{{ URL::asset('/css/portal.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

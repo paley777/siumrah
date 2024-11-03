@@ -35,10 +35,10 @@
                             </div><!--//col-->
                             <div class="col-12 col-lg-auto text-center text-lg-start">
                                 <div class="notification-type mb-2"><span class="badge bg-primary">Olah Data</span></div>
-                                <h4 class="notification-title mb-1">Formulir Perlengkapan Umrah Baru</h4>
+                                <h4 class="notification-title mb-1">Formulir Ubah Perlengkapan Umrah</h4>
 
                                 <ul class="notification-meta list-inline mb-0">
-                                    <li class="list-inline-item">Create</li>
+                                    <li class="list-inline-item">Update</li>
                                     <li class="list-inline-item">|</li>
                                     <li class="list-inline-item">System</li>
                                 </ul>
@@ -47,25 +47,27 @@
                         </div><!--//row-->
                     </div><!--//app-card-header-->
                     <div class="app-card-body p-4">
-                        <form class="row g-2" method="post" action="/dashboard/inventory">
+                        <form class="row g-2" method="post" action="/dashboard/inventory/{{ $inventory->id }}">
+                            @method('put')
                             @csrf
                             <div class="col-md-5 position-relative">
                                 <label for="validationCustom01" class="form-label ">Nama Barang<span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="validationCustom01" class="form-control" name="nama_barang"
+                                    value="{{ old('nama_barang', $inventory->nama_barang) }}"
                                     placeholder="Isi Nama Perlengkapan Umrah" required>
                             </div>
                             <div class="col-md-4 position-relative">
                                 <label for="validationCustom01" class="form-label">Satuan<span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="validationCustom01" class="form-control" name="satuan"
-                                    placeholder="Isi Satuan" required>
+                                    placeholder="Isi Satuan" value="{{ old('satuan', $inventory->satuan) }}" required>
                             </div>
                             <div class="col-md-3 position-relative">
                                 <label for="validationCustom01" class="form-label">Stok<span
                                         class="text-danger">*</span></label>
                                 <input type="number" id="inp" class="form-control" name="stok"
-                                    placeholder="Isi Stok" required>
+                                    placeholder="Isi Stok" value="{{ old('stok', $inventory->stok) }}" required>
                             </div>
                             <p>
                                 (Wajib terisi untuk kolom dengan tanda "<span class="text-danger">*</span>").
@@ -82,7 +84,7 @@
                                         stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     </path>
                                 </g>
-                            </svg> Simpan Data
+                            </svg> Ubah Data
                         </button>
                         </form>
                     </div><!--//app-card-footer-->
@@ -97,16 +99,16 @@
         document.getElementById("inp").addEventListener("input", function() {
             // Mengubah input menjadi angka atau kosong jika tidak valid
             let value = this.value;
-            
+
             // Menghilangkan karakter 'e' atau karakter non-digit lainnya
             this.value = value.replace(/[^0-9]/g, '');
-            
+
             // Menjaga agar angka tidak kurang dari 1
             if (parseInt(this.value) < 1) {
                 this.value = 1;
             }
         });
-    
+
         // Mencegah angka dimulai dari 0
         $("#inp").on("input", function() {
             if (/^0/.test(this.value)) {
@@ -114,5 +116,5 @@
             }
         });
     </script>
-    
+
 @endsection

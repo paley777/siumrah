@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreInventoryRequest extends FormRequest
+class StoreTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,13 @@ class StoreInventoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_barang' => 'required|unique:inventories',
-            'satuan' => 'required',
-            'stok' => 'required',
+            'kode_inv' => 'required',
+            'nama_petugas' => 'required',
+            'nama_peserta' => 'required',
+            'status' => 'required',
+            'keterangan' => 'required',
+            'nama_barang.*' => 'required',
+            'qty.*' => 'required',
         ];
     }
 }

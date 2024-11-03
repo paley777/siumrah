@@ -47,7 +47,7 @@
                                 </svg>{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
 
-                                <li> <a href="/dashboard/profile/edit" class="dropdown-item"><svg width="16px"
+                                <li> <a href="/dashboard/my-profile" class="dropdown-item"><svg width="16px"
                                             height="16px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                             fill="#000000">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -90,7 +90,7 @@
         <div class="sidepanel-inner d-flex flex-column">
             <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
             <div class="app-branding">
-                <a class="app-logo" href="#"><img class="logo-icon me-2" src="{{ url('/assets/logo.png') }}"
+                <a class="app-logo" href="#"><img class="logo-icon me-2" src="{{ url('/assets/logo.jpg') }}"
                         alt="logo"><span class="logo-text">SiUmrah
                         Ver 1.0</span></a>
             </div><!--//app-branding-->
@@ -180,29 +180,47 @@
                             <span class="nav-link-text">Invoice</span>
                         </a><!--//nav-link-->
                     </li><!--//nav-item-->
+                    <li class="nav-item has-submenu">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link {{ $active === 'laporan' ? 'active' : '' }} submenu-toggle" href="#"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false"
+                            aria-controls="submenu-1">
+                            <span class="nav-icon">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z" />
+                                    <path fill-rule="evenodd"
+                                        d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-text">Laporan</span>
+                            <span class="submenu-arrow">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </span><!--//submenu-arrow-->
+                        </a><!--//nav-link-->
+                        <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+                            <ul class="submenu-list list-unstyled">
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="/dashboard/report/participant">Peserta Umrah</a></li>
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="/dashboard/report/inventory">Perlengkapan Umrah</a>
+                                </li>
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="/dashboard/report/transaction">Invoice</a>
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="/dashboard/report/order">Order</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li><!--//nav-item-->
                 </ul><!--//app-menu-->
             </nav><!--//app-nav-->
-            <div class="app-sidepanel-footer">
-                <nav class="app-nav app-nav-footer">
-                    <ul class="app-menu footer-menu list-unstyled">
-                        <li class="nav-item {{ $active === 'About' ? 'active' : '' }}">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" href="/dashboard/about">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-person"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M12 1H4a1 1 0 0 0-1 1v10.755S4 11 8 11s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
-                                        <path fill-rule="evenodd" d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Tentang Sistem</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-                    </ul><!--//footer-menu-->
-                </nav>
-            </div><!--//app-sidepanel-footer-->
-
         </div><!--//sidepanel-inner-->
     </div><!--//app-sidepanel-->
 </header><!--//app-header-->

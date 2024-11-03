@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inventory extends Model
+class Order extends Model
 {
     /**
      * The database table used by the model.
@@ -31,12 +31,4 @@ class Inventory extends Model
      * @var array<string, string>
      */
     protected $casts = [];
-    public function tambahStok($tambah)
-    {
-        $this->increment('stok', $tambah);
-    }
-    public function kurangStok($kurang)
-    {
-        $this->decrement('stok', $kurang);
-    }
 }

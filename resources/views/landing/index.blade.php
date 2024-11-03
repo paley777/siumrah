@@ -101,7 +101,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Masuk | SiUmrah Ver 1.0</title>
-    <link rel="icon" type="image/png" href="{{ url('/assets/logo.png') }}" />
+    <link rel="icon" type="image/png" href="{{ url('/assets/logo.jpg') }}" />
     <link
         href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -115,7 +115,7 @@
         <div class="login-form">
             <div class="main-div">
                 <div class="panel">
-                    <img class="mb-3" src="{{ url('/assets/logo.png') }}" style="max-height: 100px;object-fit: cover;">
+                    <img class="mb-3" src="{{ url('/assets/logo.jpg') }}" style="max-height: 100px;object-fit: cover;">
                     <h2>Portal SiUmrah v1.0</h2>
                     <p>Masukkan email dan password Anda.</p>
                     @if (session()->has('loginError'))

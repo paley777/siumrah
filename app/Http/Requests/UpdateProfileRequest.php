@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreInventoryRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,11 @@ class StoreInventoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = Auth::id();
         return [
-            'nama_barang' => 'required|unique:inventories',
-            'satuan' => 'required',
-            'stok' => 'required',
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $userId . ',id',
+            'password' => 'required',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateInventoryRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateInventoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +23,9 @@ class UpdateInventoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_barang' => 'required|unique:inventories,nama_barang,' . $this->inventory->id . ',id',
+            'satuan' => 'required',
+            'stok' => 'required',
         ];
     }
 }

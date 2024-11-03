@@ -34,7 +34,10 @@ class InventoryController extends Controller
      */
     public function store(StoreInventoryRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Inventory::create($validated);
+
+        return redirect('/dashboard/inventory')->with('success', 'Perlengkapan Umrah telah ditambahkan!');
     }
 
     /**
@@ -50,7 +53,10 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
-        //
+        return view('dashboard.inventory.edit', [
+            'active' => 'Manajemen',
+            'inventory' => $inventory,
+        ]);
     }
 
     /**
@@ -58,7 +64,10 @@ class InventoryController extends Controller
      */
     public function update(UpdateInventoryRequest $request, Inventory $inventory)
     {
-        //
+        $validated = $request->validated();
+        Inventory::where('id', $inventory['id'])->update($validated);
+
+        return redirect('/dashboard/inventory')->with('success', 'Perlengkapan Umrah telah diubah!');
     }
 
     /**
@@ -66,6 +75,7 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
-        //
+        Inventory::destroy($inventory->id);
+        return redirect('/dashboard/inventory')->with('success', 'Perlengkapan Umrah telah dihapus!');
     }
 }
