@@ -77,13 +77,11 @@
                 <tr class="ttd">
                     <th colspan="1">Penerima</th>
                     <th colspan="2">Disetujui</th>
-                    <th colspan="3">Pengirim</th>
                 </tr>
                 <tr>
                     <td colspan="1" style="text-align: center;">{{ $transaction->nama_peserta }}</td>
 
                     <td colspan="2" style="text-align: center;">{{ $transaction->nama_petugas }}</td>
-                    <td colspan="3" style="text-align: center;">..........</td>
                 </tr>
             </tfoot>
         </table>
