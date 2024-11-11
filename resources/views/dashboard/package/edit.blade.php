@@ -7,7 +7,7 @@
             <div class="container-xl">
                 <div class="row g-3 mb-4 align-items-center justify-content-between">
                     <div class="col-auto">
-                        <h1 class="app-page-title mb-0">Manajemen Peserta Umrah</h1>
+                        <h1 class="app-page-title mb-0">Edit Paket Barang</h1>
                     </div>
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -31,73 +31,65 @@
                                         <path fill-rule="evenodd"
                                             d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
                                     </svg>
-                                </div><!--//app-icon-holder-->
-                            </div><!--//col-->
+                                </div>
+                            </div>
                             <div class="col-12 col-lg-auto text-center text-lg-start">
                                 <div class="notification-type mb-2"><span class="badge bg-primary">Olah Data</span></div>
-                                <h4 class="notification-title mb-1">Formulir Ubah Peserta Umrah</h4>
-
+                                <h4 class="notification-title mb-1">Formulir Edit Paket Barang</h4>
                                 <ul class="notification-meta list-inline mb-0">
-                                    <li class="list-inline-item">Update</li>
+                                    <li class="list-inline-item">Edit</li>
                                     <li class="list-inline-item">|</li>
                                     <li class="list-inline-item">System</li>
                                 </ul>
-
-                            </div><!--//col-->
-                        </div><!--//row-->
-                    </div><!--//app-card-header-->
+                            </div>
+                        </div>
+                    </div>
                     <div class="app-card-body p-4">
-                        <form class="row g-2" method="post" action="/dashboard/participant/{{ $participant->id }}"
-                            enctype="multipart/form-data">
-                            @method('put')
+                        <form class="row g-2" method="post" action="{{ route('package.update', $package->id) }}">
                             @csrf
-                            <div class="col-md-3 position-relative">
-                                <label for="validationCustom01" class="form-label">NIK<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" id="validationCustom01" class="form-control" name="nik"
-                                    value="{{ old('nik', $participant->nik) }}" placeholder="Isi NIK" required>
-                            </div>
+                            @method('PUT')
                             <div class="col-md-6 position-relative">
-                                <label for="validationCustom01" class="form-label ">Nama Peserta Umrah<span
+                                <label for="nama_paket" class="form-label">Nama Paket<span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="validationCustom01" class="form-control" name="nama"
-                                    value="{{ old('nama', $participant->nama) }}" placeholder="Isi Nama Pelanggan" required>
+                                <input type="text" id="nama_paket" class="form-control" name="nama_paket"
+                                    placeholder="Isi Nama Paket Barang"
+                                    value="{{ old('nama_paket', $package->nama_paket) }}" required>
                             </div>
-                            <div class="col-md-3 position-relative">
-                                <label for="validationCustom01" class="form-label">No. Telp<span
-                                        class="text-danger">*</span></label>
-                                <input type="tel" id="validationCustom01" class="form-control" name="no_tlp"
-                                    value="{{ old('no_tlp', $participant->no_tlp) }}" placeholder="Isi Nomor Telepon"
-                                    required>
+                            <div class="col-12 mt-3">
+                                <h5>Daftar Barang dalam Paket</h5>
+                                <small>(Isi kuantitas untuk menambahkan barang ke paket)</small>
+
+                                <!-- DataTables for items -->
+                                <div class="table-responsive">
+                                    <table class="table mb-0" id="items-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama Barang</th>
+                                                <th>Stok Tersedia</th>
+                                                <th>Kuantitas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($inventories as $inventory)
+                                                <tr>
+                                                    <td>{{ $inventory->nama_barang }}</td>
+                                                    <td>{{ $inventory->stok }}</td>
+                                                    <td>
+                                                        <input type="number"
+                                                            name="inventories[{{ $inventory->id }}][quantity]"
+                                                            class="form-control quantity-input" placeholder="0"
+                                                            min="0" max="{{ $inventory->stok }}"
+                                                            data-max="{{ $inventory->stok }}"
+                                                            value="{{ old('inventories.' . $inventory->id . '.quantity', $packageItems[$inventory->id] ?? 0) }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div><!-- End of DataTables container -->
                             </div>
-                            <div class="col-md-12 position-relative">
-                                <label for="validationCustom01" class="form-label">Alamat<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" id="validationCustom01" class="form-control" name="alamat"
-                                    value="{{ old('alamat', $participant->alamat) }}" placeholder="Isi Alamat" required>
-                            </div>
-                            <div class="col-md-12 position-relative">
-                                <label for="package" class="form-label">Paket</label>
-                                <select class="form-select" name="package_id" id="package">
-                                    <option value="">Pilih Paket (Opsional)</option>
-                                    @foreach ($packages as $package)
-                                        <option value="{{ $package->id }}"
-                                            {{ old('package_id', $participant->package_id) == $package->id ? 'selected' : '' }}>
-                                            {{ $package->nama_paket }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-12 position-relative">
-                                <label for="validationCustom01" class="form-label">Foto KTP</label>
-                                <input type="file" name="foto_ktp" id="validationCustom01" accept=".jpg, .jpeg, .png"
-                                    class="form-control">
-                                <p class="mt-1 text-sm">Allowed file types: JPG, JPEG, PNG.</p>
-                            </div>
-                            <p>
-                                (Wajib terisi untuk kolom dengan tanda "<span class="text-danger">*</span>").
-                            </p>
-                    </div><!--//app-card-body-->
+                            <p>(Wajib terisi untuk kolom dengan tanda "<span class="text-danger">*</span>").</p>
+                    </div>
                     <div class="app-card-footer px-4 py-3">
                         <button class="btn app-btn-primary" type="submit">
                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
@@ -106,28 +98,49 @@
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
                                     <path d="M20 4L3 9.31372L10.5 13.5M20 4L14.5 21L10.5 13.5M20 4L10.5 13.5"
-                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     </path>
                                 </g>
-                            </svg> Ubah Data
+                            </svg> Update Data
                         </button>
                         </form>
-                    </div><!--//app-card-footer-->
-                </div><!--//app-card-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- DataTables and validation scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
-        document.getElementById("inp").addEventListener("change", function() {
-            let v = parseInt(this.value);
-            if (v < 1) this.value = 1;
+        $(document).ready(function() {
+            // Initialize DataTables
+            $('#items-table').DataTable({
+                paging: true,
+                searching: true,
+                ordering: false,
+                pageLength: 10,
+                lengthChange: false,
+                language: {
+                    search: "Cari Barang:",
+                    paginate: {
+                        first: "Awal",
+                        last: "Akhir",
+                        next: "Berikutnya",
+                        previous: "Sebelumnya"
+                    },
+                    info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ barang"
+                }
+            });
+
+            // Enforce max stock quantity in quantity inputs
+            $('.quantity-input').on('input', function() {
+                let max = $(this).data('max');
+                if (parseInt($(this).val()) > max) {
+                    $(this).val(max);
+                }
+            });
         });
-        $("#inp").on("input", function() {
-            if (/^0/.test(this.value)) {
-                this.value = this.value.replace(/^0/, "1")
-            }
-        })
     </script>
 @endsection

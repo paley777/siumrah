@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Participant;
 use App\Models\Inventory;
+use App\Models\Package;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,7 @@ class TransactionController extends Controller
             'active' => 'Transaksi',
             'participants' => Participant::get(),
             'inventories' => Inventory::get(),
+            'packages' => Package::with('inventories')->get(),
             'kode_inv' => $this->generateCustomID('UMRH-', 'transactions', 'kode_inv'),
         ]);
     }

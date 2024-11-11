@@ -8,6 +8,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PackageController;
 
 //Landing Login
 Route::get('/', [LandingController::class, 'index'])->name('login');
@@ -24,9 +25,13 @@ Route::middleware('auth')
         Route::resource('/participant', ParticipantController::class);
         Route::resource('/inventory', InventoryController::class);
 
+        //Manajemen Paket
+        Route::resource('/package', PackageController::class);
+
         //Sistem Transaksi
         Route::get('/transaction', [TransactionController::class, 'index']);
         Route::post('/transaction', [TransactionController::class, 'store']);
+
         //Invoice
         Route::get('/invoice', [InvoiceController::class, 'index']);
         Route::get('/invoice/{transaction}/print', [InvoiceController::class, 'print']);
@@ -41,7 +46,7 @@ Route::middleware('auth')
         //Change Password
         Route::get('/my-profile', [DashboardController::class, 'my_profile']);
         Route::get('/my-profile/edit', [DashboardController::class, 'my_profile_edit']);
-        Route::post('/my-profile/edit', [DashboardController::class, 'my_profile_store'])->middleware('auth');
+        Route::post('/my-profile/edit', [DashboardController::class, 'my_profile_store']);
 
         //Logout
         Route::post('/logout', [DashboardController::class, 'logout']);

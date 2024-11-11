@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Participant extends Model
+class Package extends Model
 {
     /**
      * The database table used by the model.
@@ -31,8 +31,15 @@ class Participant extends Model
      * @var array<string, string>
      */
     protected $casts = [];
-    public function package()
+
+    public function inventories()
     {
-        return $this->belongsTo(Package::class);
+        return $this->belongsToMany(Inventory::class, 'package_inventory')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+    public function participants()
+    {
+        return $this->hasMany(Participant::class);
     }
 }

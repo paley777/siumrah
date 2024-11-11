@@ -7,30 +7,25 @@
             <div class="container-xl">
                 <div class="row g-3 mb-4 align-items-center justify-content-between">
                     <div class="col-auto">
-                        <h1 class="app-page-title mb-0">Manajemen Peserta Umrah</h1>
+                        <h1 class="app-page-title mb-0">Manajemen Paket Barang</h1>
                     </div>
                     <div class="col-auto">
                         <div class="page-utilities">
                             <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                                 <div class="col-auto">
-                                    <a class="btn app-btn-primary" href="/dashboard/participant/create">
+                                    <a class="btn app-btn-primary" href="{{ route('package.create') }}">
                                         <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
-                                            </g>
-                                            <g id="SVGRepo_iconCarrier">
-                                                <path
-                                                    d="M13 3C13 2.44772 12.5523 2 12 2C11.4477 2 11 2.44772 11 3V11H3C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H11V21C11 21.5523 11.4477 22 12 22C12.5523 22 13 21.5523 13 21V13H21C21.5523 13 22 12.5523 22 12C22 11.4477 21.5523 11 21 11H13V3Z"
-                                                    fill="#ffffff"></path>
-                                            </g>
+                                            <path
+                                                d="M13 3C13 2.44772 12.5523 2 12 2C11.4477 2 11 2.44772 11 3V11H3C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H11V21C11 21.5523 11.4477 22 12 22C12.5523 22 13 21.5523 13 21V13H21C21.5523 13 22 12.5523 22 12C22 11.4477 21.5523 11 21 11H13V3Z"
+                                                fill="#ffffff"></path>
                                         </svg>
-                                        Tambah Peserta Baru
+                                        Tambah Paket Baru
                                     </a>
                                 </div>
-                            </div><!--//row-->
-                        </div><!--//table-utilities-->
-                    </div><!--//col-auto-->
+                            </div>
+                        </div>
+                    </div>
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>{{ session('success') }}</strong>
@@ -46,9 +41,9 @@
                             </ul>
                         </div>
                     @endif
-                </div><!--//row-->
+                </div>
                 <div class="tab-content" id="orders-table-tab-content">
-                    <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+                    <div class="tab-pane fade show active" id="orders-all" role="tabpanel">
                         <div class="app-card app-card-orders-table shadow-sm mb-5">
                             <div class="app-card-body">
                                 <div class="table-responsive p-4">
@@ -56,37 +51,27 @@
                                         <thead>
                                             <tr>
                                                 <th class="cell">No.</th>
-                                                <th class="cell">NIK</th>
-                                                <th class="cell">Nama Peserta</th>
-                                                <th class="cell">Nomor Telp.</th>
-                                                <th class="cell">Alamat</th>
-                                                <th class="cell">Paket</th>
-                                                <th class="cell">Foto KTP</th>
+                                                <th class="cell">Nama Paket</th>
+                                                <th class="cell">Barang dalam Paket</th>
                                                 <th class="cell">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($participants as $key => $participant)
+                                            @foreach ($packages as $package)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $participant->nik }}</td>
-                                                    <td>{{ $participant->nama }}</td>
-                                                    <td>{{ $participant->no_tlp }}</td>
-                                                    <td>{{ $participant->alamat }}</td>
-                                                    <td>{{ $participant->package->nama_paket ?? 'Tidak Ada Paket' }}</td>
+                                                    <td>{{ $package->nama_paket }}</td>
                                                     <td>
-                                                        @if ($participant->foto_ktp)
-                                                            <a href="{{ url('foto_ktp/' . $participant->foto_ktp) }}"
-                                                                download>
-                                                                <img src="{{ url('foto_ktp/' . $participant->foto_ktp) }}"
-                                                                    alt="Foto KTP" style="width: 100px; height: auto;">
-                                                            </a>
-                                                        @else
-                                                            No file
-                                                        @endif
+                                                        <ul>
+                                                            @foreach ($package->inventories as $inventory)
+                                                                <li>{{ $inventory->nama_barang }} -
+                                                                    Quantity: {{ $inventory->pivot->quantity }}
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
                                                     </td>
                                                     <td>
-                                                        <a href="/dashboard/participant/{{ $participant->id }}/edit"
+                                                        <a href="{{ route('package.edit', $package->id) }}"
                                                             class="btn btn-sm btn-warning"><svg width="16px"
                                                                 height="16px" viewBox="0 0 24 24"
                                                                 xmlns="http://www.w3.org/2000/svg" fill="#000000">
@@ -114,7 +99,7 @@
                                                                     </g>
                                                                 </g>
                                                             </svg> Ubah</a>
-                                                        <form action="/dashboard/participant/{{ $participant->id }}"
+                                                        <form action="{{ route('package.destroy', $package->id) }}"
                                                             method="post" class="d-inline">
                                                             @method('delete')
                                                             @csrf
@@ -139,14 +124,14 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div><!--//table-responsive-->
-                            </div><!--//app-card-body-->
-                        </div><!--//app-card-->
-                    </div><!--//tab-pane-->
-                </div><!--//tab-content-->
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-    </div><!--//app-wrapper-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreParticipantRequest extends FormRequest
+class StorePackageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,9 @@ class StoreParticipantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nik' => 'required|unique:participants',
-            'nama' => 'required',
-            'no_tlp' => 'required',
-            'alamat' => 'required',
-            'foto_ktp' => 'required|file|mimes:jpg,jpeg,png',
-            'package_id' => 'nullable|exists:packages,id', // Ensure the package ID is valid if provided
+            'nama_paket' => 'required|string|max:255|unique:packages,nama_paket', // Ensures unique package name
+            'inventories' => 'required|array',
+            'inventories.*.quantity' => 'nullable|integer|min:0', // Allows null or an integer >= 0
         ];
     }
 }

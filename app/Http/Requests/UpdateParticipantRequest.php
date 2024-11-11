@@ -23,9 +23,12 @@ class UpdateParticipantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'required|unique:participants,nama,' . $this->participant->id . ',id',
+            'nik' => 'required|unique:participants,nik,' . $this->participant->id . ',id',
+            'nama' => 'required',
             'no_tlp' => 'required',
             'alamat' => 'required',
+            'foto_ktp' => 'nullable|file|mimes:jpg,jpeg,png',
+            'package_id' => 'nullable|exists:packages,id',
         ];
     }
 }

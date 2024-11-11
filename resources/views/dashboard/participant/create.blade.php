@@ -47,9 +47,15 @@
                         </div><!--//row-->
                     </div><!--//app-card-header-->
                     <div class="app-card-body p-4">
-                        <form class="row g-2" method="post" action="/dashboard/participant">
+                        <form class="row g-2" method="post" action="/dashboard/participant" enctype="multipart/form-data">
                             @csrf
-                            <div class="col-md-5 position-relative">
+                            <div class="col-md-3 position-relative">
+                                <label for="validationCustom01" class="form-label">NIK<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" id="validationCustom01" class="form-control" name="nik"
+                                    placeholder="Isi NIK" required>
+                            </div>
+                            <div class="col-md-6 position-relative">
                                 <label for="validationCustom01" class="form-label ">Nama Peserta Umrah<span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="validationCustom01" class="form-control" name="nama"
@@ -67,6 +73,22 @@
                                 <input type="text" id="validationCustom01" class="form-control" name="alamat"
                                     placeholder="Isi Alamat" required>
                             </div>
+                            <div class="col-md-12 position-relative">
+                                <label for="package" class="form-label">Paket</label>
+                                <select class="form-select" name="package_id" id="package">
+                                    <option value="">Pilih Paket (Opsional)</option>
+                                    @foreach ($packages as $package)
+                                        <option value="{{ $package->id }}">{{ $package->nama_paket }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12 position-relative">
+                                <label for="validationCustom01" class="form-label">Foto KTP<span
+                                        class="text-danger">*</span></label>
+                                <input type="file" name="foto_ktp" id="validationCustom01" accept=".jpg, .jpeg, .png"
+                                    class="form-control">
+                                <p class="mt-1 text-sm">Allowed file types: JPG, JPEG, PNG.</p>
+                            </div>
                             <p>
                                 (Wajib terisi untuk kolom dengan tanda "<span class="text-danger">*</span>").
                             </p>
@@ -79,7 +101,8 @@
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                 <g id="SVGRepo_iconCarrier">
                                     <path d="M20 4L3 9.31372L10.5 13.5M20 4L14.5 21L10.5 13.5M20 4L10.5 13.5"
-                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
                                     </path>
                                 </g>
                             </svg> Simpan Data

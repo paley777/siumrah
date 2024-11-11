@@ -39,4 +39,11 @@ class Inventory extends Model
     {
         $this->decrement('stok', $kurang);
     }
+
+    public function packages()
+    {
+        return $this->belongsToMany(Package::class, 'package_inventory')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
 }
