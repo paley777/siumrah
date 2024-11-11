@@ -31,4 +31,11 @@ class Transaction extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+    /**
+     * Define the relationship to Participant
+     */
+    public function participant()
+    {
+        return $this->belongsTo(Participant::class);
+    }
 }

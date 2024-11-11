@@ -52,6 +52,9 @@ class TransactionController extends Controller
     {
         $validated = $request->validated();
 
+        // Pisahkan ID dan nama peserta dari participant_id
+        [$participant_id, $participant_name] = explode('|', $validated['participant_id']);
+
         // Iterasi data barang yang dipesan
         $nama_barang = $request->input('nama_barang');
         $qty = $request->input('qty');
@@ -62,19 +65,24 @@ class TransactionController extends Controller
                 'nama_barang' => $nama_barang,
                 'qty' => $qty[$key],
             ]);
+
             $kurang = $qty[$key];
             $inventory = Inventory::where('nama_barang', $nama_barang)->first();
             if ($inventory) {
                 $inventory->kurangStok($kurang);
             }
         }
+
+        // Menyimpan transaksi dengan participant_id dan nama_peserta
         Transaction::create([
             'kode_inv' => $validated['kode_inv'],
             'nama_petugas' => $validated['nama_petugas'],
-            'nama_peserta' => $validated['nama_peserta'],
+            'nama_peserta' => $participant_name, // Simpan nama peserta yang dipisahkan
             'status' => $validated['status'],
             'keterangan' => $validated['keterangan'],
+            'participant_id' => $participant_id, // Simpan ID peserta yang dipisahkan
         ]);
+
         return redirect()->back()->with('success', 'Transaksi sukses, Silakan menuju fitur Invoice untuk mencetak!');
     }
 

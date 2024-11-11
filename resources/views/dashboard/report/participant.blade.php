@@ -55,19 +55,22 @@
                                         <thead>
                                             <tr>
                                                 <th class="cell">No.</th>
+                                                <th class="cell">NIK</th>
                                                 <th class="cell">Nama Peserta</th>
                                                 <th class="cell">Nomor Telp.</th>
                                                 <th class="cell">Alamat</th>
-
+                                                <th class="cell">Paket</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($participants as $key => $participant)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $participant->nik }}</td>
                                                     <td>{{ $participant->nama }}</td>
                                                     <td>{{ $participant->no_tlp }}</td>
                                                     <td>{{ $participant->alamat }}</td>
+                                                    <td>{{ $participant->package->nama_paket ?? 'Tidak Ada Paket' }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

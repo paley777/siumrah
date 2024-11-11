@@ -61,6 +61,7 @@
                                                 <th class="cell">Tanggal</th>
                                                 <th class="cell">Petugas</th>
                                                 <th class="cell">Peserta Umrah</th>
+                                                <th class="cell">Nama Paket</th>
                                                 <th class="cell">Status</th>
                                                 <th class="cell">Keterangan</th>
                                             </tr>
@@ -74,6 +75,8 @@
                                                     <td>{{ $transaction->created_at->isoFormat('dddd, D MMMM Y') }}</td>
                                                     <td>{{ $transaction->nama_petugas }}</td>
                                                     <td>{{ $transaction->nama_peserta }}</td>
+                                                    <td>{{ $transaction->participant->package->nama_paket ?? 'Tidak Memiliki Paket' }}
+                                                    </td>
                                                     <td>{{ $transaction->status }}</td>
                                                     <td>{{ $transaction->keterangan }}</td>
                                                 </tr>

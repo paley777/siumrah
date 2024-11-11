@@ -25,10 +25,10 @@ class StoreTransactionRequest extends FormRequest
         return [
             'kode_inv' => 'required',
             'nama_petugas' => 'required',
-            'nama_peserta' => 'required',
             'status' => 'required',
             'keterangan' => 'required',
             'nama_barang.*' => 'required',
+            'participant_id' => 'required',
             'qty.*' => 'required',
         ];
     }

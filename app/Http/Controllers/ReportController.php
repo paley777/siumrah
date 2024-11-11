@@ -37,7 +37,7 @@ class ReportController extends Controller
     {
         return view('dashboard.report.transaction', [
             'active' => 'laporan',
-            'transactions' => Transaction::get(),
+            'transactions' => Transaction::with('participant.package')->get(),
         ]);
     }
     /**

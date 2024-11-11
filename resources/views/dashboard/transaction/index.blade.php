@@ -10,6 +10,15 @@
                     <div class="col-auto">
                         <h1 class="app-page-title mb-0">Sistem Transaksi</h1>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="col-auto">
                         <div class="page-utilities">
                             <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
@@ -133,13 +142,13 @@
                                                     value="{{ $kode_inv }}" readonly required>
                                             </div>
                                             <div class="col-md-12 position-relative">
-                                                <label for="validationCustom01" class="form-label ">Nama Peserta
+                                                <label for="validationCustom01" class="form-label">Nama Peserta
                                                     Umrah<span class="text-danger">*</span></label>
-                                                <select class="form-select select2" name="nama_peserta"
+                                                <select class="form-select select2" name="participant_id"
                                                     id="participant-select" required>
                                                     <option value="">Pilih Peserta Umrah</option>
                                                     @foreach ($participants as $participant)
-                                                        <option value="{{ $participant->id }}"
+                                                        <option value="{{ $participant->id }}|{{ $participant->nama }}"
                                                             data-package-id="{{ $participant->package_id }}">
                                                             {{ $participant->nama }}
                                                         </option>
@@ -248,9 +257,9 @@
                                                     data-nama_barang="{{ $inventory->nama_barang }}"
                                                     data-satuan="{{ $inventory->satuan }}"
                                                     data-stok="{{ $inventory->stok }}" ">Tambah Perlengkapan Umrah
-                                                                    </button>
-                                                                        </td>
-                                                                    </tr>
+                                                                            </button>
+                                                                                </td>
+                                                                            </tr>
      @endif
                                     @endforeach
                             </tbody>

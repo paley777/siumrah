@@ -9,14 +9,11 @@ use App\Models\Order;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('dashboard.invoice.index', [
             'active' => 'Invoice',
-            'transactions' => Transaction::get(),
+            'transactions' => Transaction::with('participant.package')->get(),
         ]);
     }
     /**
