@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\Order;
 use App\Models\Participant;
 use App\Models\Inventory;
+use App\Models\Package;
 
 class ReportController extends Controller
 {
@@ -17,6 +18,7 @@ class ReportController extends Controller
     {
         return view('dashboard.report.participant', [
             'active' => 'laporan',
+            'packages' => Package::all(),
             'participants' => Participant::get(),
         ]);
     }

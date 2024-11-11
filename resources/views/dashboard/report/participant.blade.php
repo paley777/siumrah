@@ -15,7 +15,7 @@
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.4.1/js/dataTables.dateTime.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    
     <div class="app-wrapper">
         <div class="app-content pt-3 p-md-3 p-lg-4">
             <div class="container-xl">
@@ -26,7 +26,16 @@
                     <div class="col-auto">
                         <div class="page-utilities">
                             <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-
+                                <!-- Dropdown filter for package -->
+                                <div class="col-auto">
+                                    <label for="packageFilter">Filter by Paket:</label>
+                                    <select id="packageFilter" class="form-select">
+                                        <option value="">All Packages</option>
+                                        @foreach ($packages as $package)
+                                            <option value="{{ $package->nama_paket }}">{{ $package->nama_paket }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div><!--//row-->
                         </div><!--//table-utilities-->
                     </div><!--//col-auto-->
@@ -83,82 +92,32 @@
             </div><!--//container-fluid-->
         </div><!--//app-content-->
     </div><!--//app-wrapper-->
+    
     <script>
-        var minDate, maxDate;
-
-        // Custom filtering function for date range on any column
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var min = minDate.val();
-                var max = maxDate.val();
-                var date = new Date(data[1]);
-
-                if (
-                    (min === null && max === null) ||
-                    (min === null && date <= max) ||
-                    (min <= date && max === null) ||
-                    (min <= date && date <= max)
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
         $(document).ready(function() {
-            // Initialize date inputs for date range filtering
-            minDate = new DateTime($('#min'), {
-                format: 'MMMM Do YYYY'
-            });
-            maxDate = new DateTime($('#max'), {
-                format: 'MMMM Do YYYY'
-            });
-
-            // DataTables initialization with export buttons
+            // Initialize DataTables with export buttons
             var table = $('#example').DataTable({
                 dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'copyHtml5',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'print',
+                    'pdfHtml5',
                     'colvis'
                 ]
             });
 
-            // Apply regex search for specific match in "Paket" column
-            $('#example_filter input').unbind().on('keyup', function() {
-                var searchTerm = this.value;
-                table
-                    .columns(5) // Index for "Paket" column
-                    .search('\\b' + searchTerm + '\\b', true, false) // regex search for exact match
-                    .draw();
-            });
-
-            // Refilter the table on date range change
-            $('#min, #max').on('change', function() {
-                table.draw();
+            // Dropdown filter event listener
+            $('#packageFilter').on('change', function() {
+                var selectedPackage = $(this).val();
+                if (selectedPackage) {
+                    // Apply search filter to the package column (column index 5)
+                    table.column(5).search('^' + selectedPackage + '$', true, false).draw();
+                } else {
+                    // Reset filter if no package is selected
+                    table.column(5).search('').draw();
+                }
             });
         });
     </script>
-
 @endsection

@@ -257,9 +257,9 @@
                                                     data-nama_barang="{{ $inventory->nama_barang }}"
                                                     data-satuan="{{ $inventory->satuan }}"
                                                     data-stok="{{ $inventory->stok }}" ">Tambah Perlengkapan Umrah
-                                                                            </button>
-                                                                                </td>
-                                                                            </tr>
+                                                                                    </button>
+                                                                                        </td>
+                                                                                    </tr>
      @endif
                                     @endforeach
                             </tbody>
@@ -419,11 +419,45 @@
     </script>
     <script>
         $(document).ready(function() {
+            // Intercept form submission
+            $('form').on('submit', function(event) {
+                // Check if there are any items in the "nama_barang[]" fields
+                const itemCount = $("input[name='nama_barang[]']").length;
+
+                if (itemCount === 0) {
+                    // Prevent form submission
+                    event.preventDefault();
+
+                    // Show the empty cart modal
+                    $('#emptyCartModal').modal('show');
+                }
+            });
+
+            // Initialize select2 for participant selection
             $('.select2').select2({
                 placeholder: "Select a participant",
                 allowClear: true,
-                width: '100%' // Adjusts the width to match the parent element
+                width: '100%'
             });
         });
     </script>
+
+    <div class="modal fade" id="emptyCartModal" tabindex="-1" aria-labelledby="emptyCartModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emptyCartModalLabel">Peringatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Silakan tambahkan setidaknya satu barang ke keranjang sebelum melanjutkan transaksi.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection

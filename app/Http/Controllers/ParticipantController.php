@@ -17,6 +17,7 @@ class ParticipantController extends Controller
     {
         return view('dashboard.participant.index', [
             'active' => 'Manajemen',
+            'packages' => Package::all(),
             'participants' => Participant::with('package')->orderBy('nama', 'desc')->get(),
         ]);
     }
@@ -75,10 +76,10 @@ class ParticipantController extends Controller
     public function edit(Participant $participant)
     {
         return view('dashboard.participant.edit', [
-        'active' => 'Manajemen',
-        'participant' => $participant,
-        'packages' => Package::all(), // Pass all available packages to the view
-    ]);
+            'active' => 'Manajemen',
+            'participant' => $participant,
+            'packages' => Package::all(), // Pass all available packages to the view
+        ]);
     }
 
     /**
