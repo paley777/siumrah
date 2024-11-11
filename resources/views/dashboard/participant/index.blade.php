@@ -73,7 +73,7 @@
                                                     <td>{{ $participant->nama }}</td>
                                                     <td>{{ $participant->no_tlp }}</td>
                                                     <td>{{ $participant->alamat }}</td>
-                                                    <td>{{ $participant->package->nama_paket ?? 'Tidak Ada Paket' }}</td>
+                                                    <td>{{ $participant->package->nama_paket ?? '-' }}</td>
                                                     <td>
                                                         @if ($participant->foto_ktp)
                                                             <a href="{{ url('foto_ktp/' . $participant->foto_ktp) }}"
@@ -151,7 +151,18 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#example').DataTable();
+            var table = $('#example').DataTable();
+    
+            // Event listener untuk menangkap input dari kotak pencarian umum
+            $('#example_filter input').unbind().on('keyup', function() {
+                var searchTerm = this.value;
+    
+                // Terapkan pencarian regex pada kolom "Paket" (kolom ke-6 dalam tabel, jadi indeks 5)
+                table
+                    .columns(5) // Kolom "Paket"
+                    .search('\\b' + searchTerm + '\\b', true, false) // regex: true, smart: false
+                    .draw();
+            });
         });
     </script>
 @endsection

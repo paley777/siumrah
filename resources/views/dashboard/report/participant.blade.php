@@ -85,7 +85,8 @@
     </div><!--//app-wrapper-->
     <script>
         var minDate, maxDate;
-        // Custom filtering function which will search data in column four between two values
+
+        // Custom filtering function for date range on any column
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
                 var min = minDate.val();
@@ -105,7 +106,7 @@
         );
 
         $(document).ready(function() {
-            // Create date inputs
+            // Initialize date inputs for date range filtering
             minDate = new DateTime($('#min'), {
                 format: 'MMMM Do YYYY'
             });
@@ -113,7 +114,7 @@
                 format: 'MMMM Do YYYY'
             });
 
-            // DataTables initialisation
+            // DataTables initialization with export buttons
             var table = $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [{
@@ -131,23 +132,33 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: ':visible',
-                        },
-
+                            columns: ':visible'
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
                             columns: ':visible'
                         }
-                    }, 'colvis'
+                    },
+                    'colvis'
                 ]
-
             });
-            // Refilter the table
+
+            // Apply regex search for specific match in "Paket" column
+            $('#example_filter input').unbind().on('keyup', function() {
+                var searchTerm = this.value;
+                table
+                    .columns(5) // Index for "Paket" column
+                    .search('\\b' + searchTerm + '\\b', true, false) // regex search for exact match
+                    .draw();
+            });
+
+            // Refilter the table on date range change
             $('#min, #max').on('change', function() {
                 table.draw();
             });
         });
     </script>
+
 @endsection
